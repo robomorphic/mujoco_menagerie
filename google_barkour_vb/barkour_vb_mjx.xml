@@ -76,7 +76,7 @@
   <worldbody>
     <body name="torso" childclass="bkvb">
       <freejoint name="torso"/>
-      <camera name="track" pos="0.846 -1.465 0.916" xyaxes="0.866 0.500 0.000 -0.171 0.296 0.940" mode="trackcom"/>
+      <camera name="track" pos="1.958 -2.348 0.591" xyaxes="0.768 0.641 0.000 -0.101 0.122 0.987" mode="trackcom"/>
       <inertial pos="0.0055238 -0.000354563 0.00835899" quat="-0.00150849 0.694899 -0.000198355 0.719106" mass="6.04352"
         diaginertia="0.144664 0.12027 0.0511405"/>
       <geom class="bkvb/torso" pos="-7.85127e-05 -0.000500734 0" mesh="neck"/>
@@ -132,7 +132,7 @@
             <joint name="knee_front_left" class="bkvb/knee"/>
             <geom class="bkvb/foot" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
             <geom class="bkvb/lower_leg" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
-            <geom class="bkvb/collision/foot"/>
+            <geom name="foot_front_left" class="bkvb/collision/foot"/>
             <site name="foot_front_left" class="bkvb/foot"/>
           </body>
         </body>
@@ -154,7 +154,7 @@
             <joint name="knee_hind_left" class="bkvb/knee"/>
             <geom class="bkvb/lower_leg" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
             <geom class="bkvb/foot" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
-            <geom class="bkvb/collision/foot"/>
+            <geom name="foot_hind_left" class="bkvb/collision/foot"/>
             <site name="foot_hind_left" class="bkvb/foot"/>
           </body>
         </body>
@@ -176,7 +176,7 @@
             <joint name="knee_front_right" class="bkvb/knee"/>
             <geom class="bkvb/foot" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
             <geom class="bkvb/lower_leg" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
-            <geom class="bkvb/collision/foot"/>
+            <geom name="foot_front_right" class="bkvb/collision/foot"/>
             <site name="foot_front_right" class="bkvb/foot"/>
           </body>
         </body>
@@ -198,7 +198,7 @@
             <joint name="knee_hind_right" class="bkvb/knee"/>
             <geom class="bkvb/lower_leg" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
             <geom class="bkvb/foot" pos="-0.0649838 0.178542 0" quat="0.819152 0 0 -0.573576"/>
-            <geom class="bkvb/collision/foot"/>
+            <geom name="foot_hind_right" class="bkvb/collision/foot"/>
             <site name="foot_hind_right" class="bkvb/foot"/>
           </body>
         </body>
@@ -247,10 +247,12 @@
     <jointvel joint="hip_hind_right" name="hip_hind_right_vel"/>
     <jointvel joint="knee_hind_right" name="knee_hind_right_vel"/>
     <gyro site="imu_frame" name="gyro"/>
+    <velocimeter site="imu_frame" name="local_linvel"/>
     <accelerometer site="imu_frame" name="accelerometer"/>
-    <framequat objtype="site" objname="imu_frame" name="orientation"/>
     <framepos objtype="site" objname="imu_frame" name="global_position"/>
+    <framezaxis objtype="site" objname="imu_frame" name="upvector"/>
     <framelinvel objtype="site" objname="imu_frame" name="global_linvel"/>
     <frameangvel objtype="site" objname="imu_frame" name="global_angvel"/>
+    <framequat objtype="site" objname="imu_frame" name="orientation"/>
   </sensor>
 </mujoco>
