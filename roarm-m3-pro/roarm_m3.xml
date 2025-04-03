@@ -1,0 +1,105 @@
+<mujoco model="roarm_m3">
+  <!-- Compiler and simulation options -->
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <option integrator="implicitfast" impratio="10"/>
+
+  <!-- Default parameters matching panda conventions -->
+  <default>
+    <default class="roarm_m3">
+      <material specular="0.5" shininess="0.25"/>
+      <joint armature="0.1" damping="1" axis="0 0 1" range="-2.8973 2.8973"/>
+      <motor ctrlrange="-45.4 45.4"/>
+      <general dyntype="none" biastype="affine" ctrlrange="-2.8973 2.8973" forcerange="-87 87"/>
+      <default class="roarm_m3/visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="roarm_m3/collision">
+        <geom type="mesh" group="3"/>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+    </default>
+  </default>
+
+  <!-- Asset definitions -->
+  <asset>
+    <material class="roarm_m3" name="silver" rgba="0.75 0.75 0.75 1"/>
+    <mesh name="base_link" file="base_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="link1" file="link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="link2" file="link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="link3" file="link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="link4" file="link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="link5" file="link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="gripper_link" file="gripper_link.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <!-- Worldbody matching the panda convention -->
+  <worldbody>
+    <light name="top" pos="0 0 2" mode="trackcom"/>
+    <body name="base_link" childclass="roarm_m3" pos="0 0 0.0701">
+      <inertial mass="0.2562183" pos="-0.0068 0 -0.03"
+         fullinertia="0.00029211 0.00035719 0.000349421 0 0 0"/>
+      <geom type="mesh" mesh="base_link" material="silver" class="roarm_m3/visual"/>
+
+      <body name="link1" pos="0 0 0">
+        <joint name="base_link_to_link1" type="hinge" axis="0 0 1" range="-3.1416 3.1416"/>
+        <inertial mass="0.0729177" pos="0 0 0.037"
+           fullinertia="4.68465e-05 3.32107e-05 5.01023e-05 0 0 0"/>
+        <geom type="mesh" mesh="link1" material="silver" class="roarm_m3/visual"/>
+
+        <body name="link2" pos="0 0 0.051959" quat="0.5 -0.5 -0.5 -0.5">
+          <joint name="link1_to_link2" type="hinge" axis="0 0 1" range="-1.5708 1.5708"/>
+          <inertial mass="0.0703216" pos="0.119 0.012247 -0.0001"
+             fullinertia="5.46501e-05 0.000423091 0.000404557 0 0 0"/>
+          <geom type="mesh" mesh="link2" material="silver" class="roarm_m3/visual"/>
+
+          <body name="link3" pos="0.236815 0.030002 0" quat="0.7071 0 0 0.7071">
+            <joint name="link2_to_link3" type="hinge" axis="0 0 1" range="-1 2.95"/>
+            <inertial mass="0.021608" pos="-0.0015 -0.0765 0.00505"
+               fullinertia="6.37699e-05 3.67026e-06 6.28965e-05 0 0 0"/>
+            <geom type="mesh" mesh="link3" material="silver" class="roarm_m3/visual"/>
+
+            <body name="link4" pos="0 -0.144586 0">
+              <joint name="link3_to_link4" type="hinge" axis="0 0 1" range="-1.5708 1.5708"/>
+              <inertial mass="0.0099933" pos="-0.0015 -0.022 -0.00075"
+                 fullinertia="4.53979e-06 3.78103e-06 5.60238e-06 0 0 0"/>
+              <geom type="mesh" mesh="link4" material="silver" class="roarm_m3/visual"/>
+
+              <body name="link5" pos="0.015147 -0.053653 0" quat="0.5 0.5 0.5 -0.5">
+                <joint name="link4_to_link5" type="hinge" axis="0 0 1" range="-3.1416 3.1416"/>
+                <inertial mass="0.0153928" pos="-0.0078 0 0.0595"
+                   fullinertia="2.02869e-05 2.14427e-05 4.39495e-06 0 0 0"/>
+                <geom type="mesh" mesh="link5" material="silver" class="roarm_m3/visual"/>
+
+                <body name="gripper_link" pos="0 0.018821 0.052035" quat="0.5 -0.5 -0.5 -0.5">
+                  <joint name="link5_to_gripper_link" type="hinge" axis="0 0 1" range="0 1.5"/>
+                  <inertial mass="0.0028708" pos="0.027 0.0027 -0.018935"
+                     fullinertia="5.23216e-07 1.82071e-06 1.60231e-06 0 0 0"/>
+                  <geom type="mesh" mesh="gripper_link" material="silver" class="roarm_m3/visual"/>
+                </body>
+
+                <body name="hand_tcp" pos="0 0 0.115428" quat="0.5 0.5 -0.5 0.5">
+                  <!-- Pure attachment frame -->
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- Actuators for each revolute joint -->
+  <actuator>
+    <motor joint="base_link_to_link1" ctrlrange="-45.4 45.4"/>
+    <motor joint="link1_to_link2" ctrlrange="-45.4 45.4"/>
+    <motor joint="link2_to_link3" ctrlrange="-45.4 45.4"/>
+    <motor joint="link3_to_link4" ctrlrange="-45.4 45.4"/>
+    <motor joint="link4_to_link5" ctrlrange="-45.4 45.4"/>
+    <motor joint="link5_to_gripper_link" ctrlrange="-45.4 45.4"/>
+  </actuator>
+
+  <!-- Sample keyframe -->
+  <keyframe>
+    <key name="home" qpos="1 1 1 1 1 1"/>
+  </keyframe>
+</mujoco>
